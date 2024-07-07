@@ -4,25 +4,13 @@
     <div>
       <label for="title">
         Title
-        <input
-          v-bind:value="post.title"
-          @input="post.title = $event.target.value"
-          class="input"
-          type="text"
-          id="title"
-        />
+        <input v-model="post.title" class="input" type="text" id="title" />
       </label>
     </div>
     <div>
       <label for="description">
         Description
-        <input
-          v-bind:value="post.body"
-          @input="post.body = $event.target.value"
-          class="input"
-          type="text"
-          id="description"
-        />
+        <input v-model="post.body" class="input" type="text" id="description" />
       </label>
     </div>
     <button @click="createPost" class="form-btn">Create post</button>
@@ -38,6 +26,16 @@ export default {
         body: '',
       },
     };
+  },
+  methods: {
+    createPost() {
+      this.post.id = Date.now();
+      this.$emit('create', this.post);
+      this.post = {
+        title: '',
+        body: '',
+      };
+    },
   },
 };
 </script>
