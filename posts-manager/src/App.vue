@@ -1,15 +1,19 @@
 <template>
   <div class="app">
     <h1>Posts Manager</h1>
+    <!-- <my-button @click="fetchPosts">Get posts!</my-button> -->
     <my-button @click="showModal" class="modal-btn">Create Post</my-button>
     <my-modal v-model:show="modalVisible">
       <PostForm @create="createPost" />
     </my-modal>
-    <PostList :posts="posts" @remove="removePost" />
+    <PostList v-if="!arePostsLoading" :posts="posts" @remove="removePost" />
+    <div v-else>Loading...</div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
 
@@ -20,12 +24,9 @@ export default {
   },
   data() {
     return {
-      posts: [
-        { id: 1, title: 'JS', body: 'language with dynamic typification' },
-        { id: 2, title: 'Vue', body: 'Framework for JS' },
-        { id: 3, title: 'React', body: 'Library for JS' },
-      ],
+      posts: [],
       modalVisible: false,
+      arePostsLoading: false,
     };
   },
   methods: {
@@ -39,6 +40,20 @@ export default {
     showModal() {
       this.modalVisible = true;
     },
+    async fetchPosts() {
+      try {
+        this.arePostsLoading = true;
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+        this.posts = response.data;
+      } catch (e) {
+        alert('Error!');
+      } finally {
+        this.arePostsLoading = false;
+      }
+    },
+  },
+  mounted() {
+    this.fetchPosts();
   },
 };
 </script>
