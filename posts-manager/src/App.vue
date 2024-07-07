@@ -1,6 +1,10 @@
 <template>
   <div class="app">
     <h1>Posts Manager</h1>
+    <my-input
+      v-model="searchQuery"
+      placeholder="Find Post"
+    />
     <div class="app-btns">
       <my-button @click="showModal">Create Post</my-button>
       <my-select v-model="selectedSort" :options="sortOptions"></my-select>
@@ -8,7 +12,7 @@
     <my-modal v-model:show="modalVisible">
       <PostForm @create="createPost" />
     </my-modal>
-    <PostList v-if="!arePostsLoading" :posts="sortedPosts" @remove="removePost" />
+    <PostList v-if="!arePostsLoading" :posts="sortedAndFoundPosts" @remove="removePost" />
     <div v-else>Loading...</div>
   </div>
 </template>
@@ -30,6 +34,7 @@ export default {
       modalVisible: false,
       arePostsLoading: false,
       selectedSort: '',
+      searchQuery: '',
       sortOptions: [
         { value: 'title', name: 'By name' },
         { value: 'body', name: 'By description' },
@@ -65,6 +70,9 @@ export default {
   computed: {
     sortedPosts() {
       return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
+    },
+    sortedAndFoundPosts() {
+      return this.sortedPosts.filter((post) => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
     },
   },
   watch: {
