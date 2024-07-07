@@ -11,7 +11,8 @@
     </my-modal>
     <PostList v-if="!arePostsLoading" :posts="sortedAndFoundPosts" @remove="removePost" />
     <div v-else>Loading...</div>
-    <div class="page-wrapper">
+    <div ref="observer" class="observer"></div>
+    <!-- <div class="page-wrapper">
       <button
         v-for="pageNumber in totalPages"
         :key="pageNumber"
@@ -21,7 +22,7 @@
       >
         {{ pageNumber }}
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -63,9 +64,9 @@ export default {
     showModal() {
       this.modalVisible = true;
     },
-    changePage(pageNumber) {
-      this.page = pageNumber;
-    },
+    // changePage(pageNumber) {
+    //   this.page = pageNumber;
+    // },
     async fetchPosts() {
       try {
         this.arePostsLoading = true;
@@ -83,9 +84,38 @@ export default {
         this.arePostsLoading = false;
       }
     },
+    async loadMorePosts() {
+      try {
+        this.page += 1;
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+          params: {
+            _page: this.page,
+            _limit: this.limit,
+          },
+        });
+        this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit);
+        this.posts = [...this.posts, ...response.data];
+      } catch (e) {
+        alert('Error!');
+      }
+    },
   },
   mounted() {
     this.fetchPosts();
+
+    const options = {
+      rootMargin: '0px',
+      threshold: 1.0,
+    };
+
+    const callback = (entries) => {
+      if (entries[0].isIntersecting && this.page < this.totalPages) {
+        this.loadMorePosts();
+      }
+    };
+
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$refs.observer);
   },
   computed: {
     sortedPosts() {
@@ -96,9 +126,9 @@ export default {
     },
   },
   watch: {
-    page() {
-      this.fetchPosts();
-    },
+    // page() {
+    //   this.fetchPosts();
+    // },
   },
 };
 </script>
@@ -134,5 +164,10 @@ export default {
 
 .current-page {
   border: 2px solid teal;
+}
+
+.observer {
+  height: 30px;
+  background: gray;
 }
 </style>
