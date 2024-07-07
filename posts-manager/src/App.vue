@@ -1,8 +1,10 @@
 <template>
   <div class="app">
     <h1>Posts Manager</h1>
-    <!-- <my-button @click="fetchPosts">Get posts!</my-button> -->
-    <my-button @click="showModal" class="modal-btn">Create Post</my-button>
+    <div class="app-btns">
+      <my-button @click="showModal">Create Post</my-button>
+      <my-select v-model="selectedSort" :options="sortOptions"></my-select>
+    </div>
     <my-modal v-model:show="modalVisible">
       <PostForm @create="createPost" />
     </my-modal>
@@ -27,6 +29,11 @@ export default {
       posts: [],
       modalVisible: false,
       arePostsLoading: false,
+      selectedSort: '',
+      sortOptions: [
+        { value: 'title', name: 'By name' },
+        { value: 'body', name: 'By description' },
+      ],
     };
   },
   methods: {
@@ -55,6 +62,11 @@ export default {
   mounted() {
     this.fetchPosts();
   },
+  watch: {
+    selectedSort(newValue) {
+      this.posts.sort((post1, post2) => post1[newValue]?.localeCompare(post2[newValue]));
+    },
+  },
 };
 </script>
 
@@ -69,7 +81,9 @@ export default {
   padding: 20px;
 }
 
-.modal-btn {
+.app-btns {
   margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
