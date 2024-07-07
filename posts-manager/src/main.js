@@ -4,6 +4,7 @@ import {
 
 import components from '@/components/common';
 import App from './App.vue';
+import router from './router/router';
 
 const app = createApp(App);
 
@@ -11,4 +12,4 @@ components.forEach((component) => {
   app.component(component.name, component);
 });
 
-app.mount('#app');
+app.use(router).mount('#app');
