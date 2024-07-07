@@ -13,7 +13,7 @@
         <input v-model="post.body" class="input" type="text" id="description" />
       </label>
     </div>
-    <button @click="createPost" class="form-btn">Create post</button>
+    <my-button class="form-btn" @click="createPost">Create post</my-button>
   </form>
 </template>
 
@@ -54,12 +54,7 @@ form {
 }
 
 .form-btn {
-  margin-top: 15px;
   align-self: flex-end;
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
-  cursor: pointer;
+  margin-top: 15px;
 }
 </style>
