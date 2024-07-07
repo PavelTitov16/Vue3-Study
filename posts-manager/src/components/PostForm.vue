@@ -1,20 +1,8 @@
 <template>
   <form @submit.prevent>
     <h4>Create a post!</h4>
-    <!-- <div>
-      <label for="title">
-        Title
-        <input  class="input" type="text" id="title" />
-      </label>
-    </div> -->
     <my-input label="Title" v-model="post.title" id="title" />
-    <my-input label="Description" v-model="post.description" id="description" />
-    <!-- <div>
-      <label for="description">
-        Description
-        <input v-model="post.body" class="input" type="text" id="description" />
-      </label>
-    </div> -->
+    <my-input label="Description" v-model="post.body" id="description" />
     <my-button class="form-btn" @click="createPost">Create post</my-button>
   </form>
 </template>
