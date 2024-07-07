@@ -1,18 +1,20 @@
 <template>
   <form @submit.prevent>
     <h4>Create a post!</h4>
-    <div>
+    <!-- <div>
       <label for="title">
         Title
-        <input v-model="post.title" class="input" type="text" id="title" />
+        <input  class="input" type="text" id="title" />
       </label>
-    </div>
-    <div>
+    </div> -->
+    <my-input label="Title" v-model="post.title" id="title" />
+    <my-input label="Description" v-model="post.description" id="description" />
+    <!-- <div>
       <label for="description">
         Description
         <input v-model="post.body" class="input" type="text" id="description" />
       </label>
-    </div>
+    </div> -->
     <my-button class="form-btn" @click="createPost">Create post</my-button>
   </form>
 </template>
@@ -44,13 +46,6 @@ export default {
 form {
   display: flex;
   flex-direction: column;
-}
-
-.input {
-  width: 100%;
-  border: 1px solid teal;
-  padding: 10px 15px;
-  margin-top: 15px;
 }
 
 .form-btn {
