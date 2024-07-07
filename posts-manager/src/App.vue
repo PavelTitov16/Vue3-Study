@@ -1,10 +1,7 @@
 <template>
   <div class="app">
     <h1>Posts Manager</h1>
-    <my-input
-      v-model="searchQuery"
-      placeholder="Find Post"
-    />
+    <my-input v-model="searchQuery" placeholder="Find Post" />
     <div class="app-btns">
       <my-button @click="showModal">Create Post</my-button>
       <my-select v-model="selectedSort" :options="sortOptions"></my-select>
@@ -14,6 +11,17 @@
     </my-modal>
     <PostList v-if="!arePostsLoading" :posts="sortedAndFoundPosts" @remove="removePost" />
     <div v-else>Loading...</div>
+    <div class="page-wrapper">
+      <button
+        v-for="pageNumber in totalPages"
+        :key="pageNumber"
+        class="page"
+        :class="{'current-page': page=== pageNumber}"
+        @click="changePage(pageNumber)"
+      >
+        {{ pageNumber }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -35,6 +43,9 @@ export default {
       arePostsLoading: false,
       selectedSort: '',
       searchQuery: '',
+      page: 1,
+      limit: 10,
+      totalPages: 0,
       sortOptions: [
         { value: 'title', name: 'By name' },
         { value: 'body', name: 'By description' },
@@ -52,10 +63,19 @@ export default {
     showModal() {
       this.modalVisible = true;
     },
+    changePage(pageNumber) {
+      this.page = pageNumber;
+    },
     async fetchPosts() {
       try {
         this.arePostsLoading = true;
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+          params: {
+            _page: this.page,
+            _limit: this.limit,
+          },
+        });
+        this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit);
         this.posts = response.data;
       } catch (e) {
         alert('Error!');
@@ -76,9 +96,9 @@ export default {
     },
   },
   watch: {
-    // selectedSort(newValue) {
-    //   this.posts.sort((post1, post2) => post1[newValue]?.localeCompare(post2[newValue]));
-    // },
+    page() {
+      this.fetchPosts();
+    },
   },
 };
 </script>
@@ -98,5 +118,21 @@ export default {
   margin: 15px 0;
   display: flex;
   justify-content: space-between;
+}
+
+.page-wrapper {
+  display: flex;
+  margin-top: 15px;
+}
+
+.page {
+  background: none;
+  border: 1px solid black;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.current-page {
+  border: 2px solid teal;
 }
 </style>
