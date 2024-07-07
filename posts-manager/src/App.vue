@@ -1,5 +1,21 @@
 <template>
-  <div>
+  <div class="app">
+    <form>
+      <h4>Create a post!</h4>
+      <div>
+        <label for="title">
+          Title
+          <input v-bind:value="title" @input="inputTitle" class="input" type="text" id="title" />
+        </label>
+      </div>
+      <div>
+        <label for="description">
+          Description
+          <input v-bind:value="body" class="input" type="text" id="description" />
+        </label>
+      </div>
+      <button @click="createPost" class="form-btn">Create post</button>
+    </form>
     <div class="post" v-for="post in posts" :key="post.id">
       <div><strong>Title: </strong> {{ post.title }}</div>
       <div><strong>Description: </strong> {{ post.body }}</div>
@@ -11,6 +27,8 @@
 export default {
   data() {
     return {
+      title: '',
+      body: '',
       posts: [
         { id: 1, title: 'JS', body: 'language with dynamic typification' },
         { id: 2, title: 'Vue', body: 'Framework for JS' },
@@ -18,7 +36,12 @@ export default {
       ],
     };
   },
-  methods: {},
+  methods: {
+    createPost() {},
+    inputTitle(event) {
+      this.title = event.target.value;
+    },
+  },
 };
 </script>
 
@@ -29,9 +52,35 @@ export default {
   box-sizing: border-box;
 }
 
+.app {
+  padding: 20px;
+}
+
 .post {
   padding: 15px;
   border: 2px solid teal;
   margin-top: 15px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid teal;
+  padding: 10px 15px;
+  margin-top: 15px;
+}
+
+.form-btn {
+  margin-top: 15px;
+  align-self: flex-end;
+  padding: 10px 15px;
+  background: none;
+  color: teal;
+  border: 1px solid teal;
+  cursor: pointer;
 }
 </style>
