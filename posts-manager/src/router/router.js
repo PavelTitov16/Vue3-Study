@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/MainPage.vue';
 import PostPage from '@/pages/PostPage.vue';
+import CurrentPostPage from '@/pages/CurrentPostPage.vue';
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
   {
     path: '/posts',
     component: PostPage,
+  },
+  {
+    path: '/posts/:id',
+    component: CurrentPostPage,
   },
 ];
 
