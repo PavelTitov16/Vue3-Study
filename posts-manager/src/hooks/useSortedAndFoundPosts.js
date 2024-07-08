@@ -1,4 +1,7 @@
-import { ref, computed } from 'vue';
+import {
+  ref,
+  computed,
+} from 'vue';
 
 function useSortedAndFoundPosts(sortedPosts) {
   const searchQuery = ref('');
@@ -6,7 +9,8 @@ function useSortedAndFoundPosts(sortedPosts) {
     .filter((post) => post.title.toLowerCase().includes(searchQuery.value.toLowerCase())));
 
   return {
-    searchQuery, sortedAndFoundPosts,
+    searchQuery,
+    sortedAndFoundPosts,
   };
 }
 

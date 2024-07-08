@@ -2,8 +2,6 @@
   <div>Post Page with id = {{ $route.params.id }}</div>
 </template>
 
-<script>
-
-</script>
+<script></script>
 
 <style scoped></style>

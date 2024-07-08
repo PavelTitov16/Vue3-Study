@@ -1,4 +1,7 @@
-import { ref, computed } from 'vue';
+import {
+  ref,
+  computed,
+} from 'vue';
 
 function useSortedPosts(posts) {
   const selectedSort = ref('');
@@ -6,7 +9,8 @@ function useSortedPosts(posts) {
     .sort((post1, post2) => post1[selectedSort.value]?.localeCompare(post2[selectedSort.value])));
 
   return {
-    selectedSort, sortedPosts,
+    selectedSort,
+    sortedPosts,
   };
 }
 

@@ -5,14 +5,12 @@
       <my-button @click="$router.push('/')">Main Page</my-button>
       <my-button @click="$router.push('/posts')">Posts Page</my-button>
       <my-button @click="$router.push('/store')">Posts In Store</my-button>
-      <my-button @click="$router.push('/store')">Posts In Composition</my-button>
+      <my-button @click="$router.push('/composition')">Posts In Composition</my-button>
     </div>
   </div>
 </template>
 
-<script>
-
-</script>
+<script></script>
 
 <style scoped>
 .navbar {

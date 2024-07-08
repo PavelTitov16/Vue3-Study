@@ -9,9 +9,14 @@ const postModule = {
     page: 1,
     limit: 10,
     totalPages: 0,
-    sortOptions: [
-      { value: 'title', name: 'By name' },
-      { value: 'body', name: 'By description' },
+    sortOptions: [{
+      value: 'title',
+      name: 'By name',
+    },
+    {
+      value: 'body',
+      name: 'By description',
+    },
     ],
   }),
   getters: {
@@ -43,7 +48,10 @@ const postModule = {
     },
   },
   actions: {
-    async fetchPosts({ state, commit }) {
+    async fetchPosts({
+      state,
+      commit,
+    }) {
       try {
         commit('setLoading', true);
         const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
@@ -60,7 +68,10 @@ const postModule = {
         commit('setLoading', false);
       }
     },
-    async loadMorePosts({ state, commit }) {
+    async loadMorePosts({
+      state,
+      commit,
+    }) {
       try {
         commit('setPage', state.page + 1);
 

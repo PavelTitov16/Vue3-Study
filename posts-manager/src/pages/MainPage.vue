@@ -2,8 +2,6 @@
   <div>Main Page</div>
 </template>
 
-<script>
-
-</script>
+<script></script>
 
 <style scoped></style>

@@ -1,18 +1,9 @@
 <template>
   <div>
-    <my-input
-      v-focus
-      :model-value="searchQuery"
-      @update:model-value="setSearchQuery"
-      placeholder="Find Post"
-    />
+    <my-input v-focus :model-value="searchQuery" @update:model-value="setSearchQuery" placeholder="Find Post" />
     <div class="app-btns">
       <my-button @click="showModal">Create Post</my-button>
-      <my-select
-        :model-value="selectedSort"
-        @update:model-value="setSelectedSort"
-        :options="sortOptions"
-      ></my-select>
+      <my-select :model-value="selectedSort" @update:model-value="setSelectedSort" :options="sortOptions"></my-select>
     </div>
     <my-modal v-model:show="modalVisible">
       <PostForm @create="createPost" />

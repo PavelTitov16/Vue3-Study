@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import {
+  ref,
+  onMounted,
+} from 'vue';
 
 function usePosts(limit) {
   const posts = ref([]);
@@ -24,7 +27,9 @@ function usePosts(limit) {
   onMounted(fetching);
 
   return {
-    posts, totalPages, arePostsLoading,
+    posts,
+    totalPages,
+    arePostsLoading,
   };
 }
 
