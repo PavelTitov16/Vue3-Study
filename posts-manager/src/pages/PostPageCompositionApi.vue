@@ -1,16 +1,19 @@
 <template>
   <div>
-    <my-input v-focus v-model="searchQuery" placeholder="Find Post" />
+    <my-input
+      v-focus
+      v-model="searchQuery"
+      placeholder="Find Post"
+    />
     <div class="app-btns">
       <my-button @click="showModal">Create Post</my-button>
       <my-select v-model="selectedSort" :options="sortOptions"></my-select>
     </div>
     <my-modal v-model:show="modalVisible">
-      <PostForm @create="createPost" />
+      <PostForm />
     </my-modal>
-    <PostList v-if="!arePostsLoading" :posts="sortedAndFoundPosts" @remove="removePost" />
+    <PostList v-if="!arePostsLoading" :posts="sortedAndFoundPosts" />
     <div v-else>Loading...</div>
-    <div v-intersection="loadMorePosts" class="observer"></div>
   </div>
 </template>
 
@@ -35,7 +38,7 @@ export default {
       ],
     };
   },
-  setup(props) {
+  setup() {
     const { posts, totalPages, arePostsLoading } = usePosts(10);
     const { sortedPosts, selectedSort } = useSortedPosts(posts);
     const { searchQuery, sortedAndFoundPosts } = useSortedAndFoundPosts(sortedPosts);
