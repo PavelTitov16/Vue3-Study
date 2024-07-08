@@ -1,11 +1,28 @@
 <template>
-  <div>works</div>
+  <NavBar />
+  <div class="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
+import NavBar from '@/components/common/NavBar.vue';
+
 export default {
-  name: 'App',
+  components: {
+    NavBar,
+  },
 };
 </script>
 
-<style></style>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  padding: 20px;
+}
+</style>
